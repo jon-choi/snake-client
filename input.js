@@ -1,8 +1,8 @@
-const net = require("net");
-const {connect} = require('./client');
+let connection; // Stores the active TCP connection object.
 
 // establishes a connection with the game server
-const setupInput = function () {
+const setupInput = function (conn) {
+  connection = conn;
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding("utf8");
@@ -11,14 +11,32 @@ const setupInput = function () {
   return stdin;
 };
 
-const handleUserInput = function (data) {
-  if (data === '\u0003') {
+const handleUserInput = function (key) {
+  
+  if (key === '\u0003') {
     process.exit();
   }
-};
 
-console.log("Connecting ...");
-setupInput();
-connect();
+  if (key === 'w') {
+    // console.log('up')
+    connection.write('Move: up');
+  }
+
+  if (key === 'a') {
+    // console.log('left')
+    connection.write('Move: left');
+  }
+
+  if (key === 's') {
+    // console.log('down')
+    connection.write('Move: down');
+  }
+  
+  if (key === 'd') {
+    // console.log('right')
+    connection.write('Move: right');
+  }
+
+};
 
 module.exports = {setupInput};
