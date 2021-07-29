@@ -5,8 +5,10 @@ const connect = function () {
   });
 
   conn.on("connect", () => {
-    console.log('you ded cuz you idled');
+    console.log('congratulations, you are now connected.')
+    conn.write("Name: JJC")
   });
+  
   // interpret incoming data as text
   conn.setEncoding("utf8");
 
